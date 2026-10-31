@@ -1,3 +1,10 @@
 <Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ClipGen.Core/ClipGen.Core.csproj" />
+    <Project Path="src/ClipGen.Infrastructure/ClipGen.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ClipGen.Be.IntegrationTests/ClipGen.Be.IntegrationTests.csproj" />
+  </Folder>
   <Project Path="ClipGen.Be.Host/ClipGen.Be.Host.csproj" />
 </Solution>
