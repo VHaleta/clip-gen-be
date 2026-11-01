@@ -11,7 +11,7 @@
 | 4 | Первая миграция и применение к LocalDB (`ClipGenDb`) | Готово |
 | 5 | Identity + JWT (`ClipGen.Be.Host`) — `TokenService`, `AuthController`, сид ролей/демо-админа | Готово |
 | 6 | Доменные контроллеры — `JobsController`, `ClipsController`, `TagsController`, ownership-фильтры, DTO и валидационные атрибуты | Готово |
-| 7 | Admin-отчёт — `AdminController` + политика `AdminOnly` + Dapper-путь | Не начато |
+| 7 | Admin-отчёт — `AdminController` + политика `AdminOnly` + Dapper-путь | Готово |
 | 8 | Swagger — security scheme, описание, финальная сборка `Program.cs` и пайплайна middleware | Не начато |
 | 9 | Интеграционные тесты — фабрика/фикстура + 6 тестовых классов | Не начато |
 | 10 | Техническая заметка `docs/data-access-notes.md` — trade-off'ы EF Core/Dapper + реальные результаты тестов | Не начато |
