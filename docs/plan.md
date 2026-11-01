@@ -8,8 +8,8 @@
 | 1 | Скаффолдинг решения — проекты `ClipGen.Core`, `ClipGen.Infrastructure`, `tests/ClipGen.Be.IntegrationTests`, ссылки, `clip-gen-be.slnx`, удаление WeatherForecast | Готово |
 | 2 | Доменная модель (`ClipGen.Core`) — сущности, enum'ы, value objects | Готово |
 | 3 | Персистентность (`ClipGen.Infrastructure`) — `AppDbContext`, Fluent-конфигурации, DI-расширение, Dapper-запрос отчёта | Готово |
-| 4 | Первая миграция и применение к LocalDB (`ClipGenDb`) | В работе (проект подготовлен, команды — за пользователем) |
-| 5 | Identity + JWT (`ClipGen.Be.Host`) — `TokenService`, `AuthController`, сид ролей/демо-админа | Не начато |
+| 4 | Первая миграция и применение к LocalDB (`ClipGenDb`) | Готово |
+| 5 | Identity + JWT (`ClipGen.Be.Host`) — `TokenService`, `AuthController`, сид ролей/демо-админа | Готово |
 | 6 | Доменные контроллеры — `JobsController`, `ClipsController`, `TagsController`, ownership-фильтры, DTO и валидационные атрибуты | Не начато |
 | 7 | Admin-отчёт — `AdminController` + политика `AdminOnly` + Dapper-путь | Не начато |
 | 8 | Swagger — security scheme, описание, финальная сборка `Program.cs` и пайплайна middleware | Не начато |
