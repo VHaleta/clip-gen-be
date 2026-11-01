@@ -10,6 +10,8 @@ public class ClipConfiguration : IEntityTypeConfiguration<Clip>
     {
         builder.ToTable("Clips");
         builder.HasKey(c => c.Id);
+        // Id генерируется в Clip.Create (Guid.NewGuid()) — не в БД (см. JobConfiguration).
+        builder.Property(c => c.Id).ValueGeneratedNever();
 
         builder.Property(c => c.Reason).HasMaxLength(500).IsRequired();
         builder.Property(c => c.Hook).HasMaxLength(200);

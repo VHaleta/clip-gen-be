@@ -10,6 +10,8 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
     {
         builder.ToTable("Tags");
         builder.HasKey(t => t.Id);
+        // Id генерируется в Tag.Create (Guid.NewGuid()) — не в БД (см. JobConfiguration).
+        builder.Property(t => t.Id).ValueGeneratedNever();
 
         builder.Property(t => t.Name).HasMaxLength(64).IsRequired();
         builder.HasIndex(t => new { t.UserId, t.Name }).IsUnique();

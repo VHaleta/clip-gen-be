@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text;
 using ClipGen.Be.Host.Auth;
+using ClipGen.Be.Host.Filters;
 using ClipGen.Core.Domain;
 using ClipGen.Infrastructure;
 using ClipGen.Infrastructure.Data;
@@ -12,7 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(
+        new System.Text.Json.Serialization.JsonStringEnumConverter()));
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddClipGenInfrastructure(builder.Configuration);
@@ -48,6 +51,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorizationBuilder()
     .AddPolicy("AdminOnly", p => p.RequireRole("Admin"));
+
+builder.Services.AddScoped<JobOwnershipFilter>();
+builder.Services.AddScoped<ClipOwnershipFilter>();
 
 var app = builder.Build();
 

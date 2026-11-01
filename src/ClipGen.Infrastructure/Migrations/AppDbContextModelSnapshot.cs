@@ -95,7 +95,6 @@ namespace ClipGen.Infrastructure.Migrations
             modelBuilder.Entity("ClipGen.Core.Domain.Clip", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -156,7 +155,6 @@ namespace ClipGen.Infrastructure.Migrations
             modelBuilder.Entity("ClipGen.Core.Domain.Job", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTimeOffset>("CreatedAt")
@@ -234,7 +232,6 @@ namespace ClipGen.Infrastructure.Migrations
             modelBuilder.Entity("ClipGen.Core.Domain.Tag", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")

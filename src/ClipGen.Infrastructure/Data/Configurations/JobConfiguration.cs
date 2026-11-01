@@ -10,6 +10,9 @@ public class JobConfiguration : IEntityTypeConfiguration<Job>
     {
         builder.ToTable("Jobs");
         builder.HasKey(j => j.Id);
+        // Id генерируется в Job.Create (Guid.NewGuid()), а не в БД — без этого EF Core может
+        // спутать новую сущность, достигнутую через fixup навигации, с уже существующей строкой.
+        builder.Property(j => j.Id).ValueGeneratedNever();
 
         builder.Property(j => j.OriginalFileName).HasMaxLength(260).IsRequired();
         builder.Property(j => j.SourceFileHash).HasMaxLength(64).IsRequired();

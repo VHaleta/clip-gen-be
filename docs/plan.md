@@ -10,7 +10,7 @@
 | 3 | Персистентность (`ClipGen.Infrastructure`) — `AppDbContext`, Fluent-конфигурации, DI-расширение, Dapper-запрос отчёта | Готово |
 | 4 | Первая миграция и применение к LocalDB (`ClipGenDb`) | Готово |
 | 5 | Identity + JWT (`ClipGen.Be.Host`) — `TokenService`, `AuthController`, сид ролей/демо-админа | Готово |
-| 6 | Доменные контроллеры — `JobsController`, `ClipsController`, `TagsController`, ownership-фильтры, DTO и валидационные атрибуты | Не начато |
+| 6 | Доменные контроллеры — `JobsController`, `ClipsController`, `TagsController`, ownership-фильтры, DTO и валидационные атрибуты | Готово |
 | 7 | Admin-отчёт — `AdminController` + политика `AdminOnly` + Dapper-путь | Не начато |
 | 8 | Swagger — security scheme, описание, финальная сборка `Program.cs` и пайплайна middleware | Не начато |
 | 9 | Интеграционные тесты — фабрика/фикстура + 6 тестовых классов | Не начато |

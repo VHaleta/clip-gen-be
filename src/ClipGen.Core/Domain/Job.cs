@@ -78,7 +78,20 @@ public class Job
 
     public void ReplaceTags(IEnumerable<Tag> tags)
     {
-        JobTags = tags.Select(t => new JobTag(Id, t.Id, t)).ToList();
+        // Мутация существующей коллекции (Add/RemoveAll), а не присвоение нового списка:
+        // EF Core отследит именно разницу, без конфликта отслеживания по дублирующемуся
+        // составному ключу между старым и новым JobTag с одинаковыми JobId/TagId.
+        var desiredIds = tags.Select(t => t.Id).ToHashSet();
+
+        JobTags.RemoveAll(jt => !desiredIds.Contains(jt.TagId));
+
+        var existingIds = JobTags.Select(jt => jt.TagId).ToHashSet();
+        foreach (var tag in tags)
+        {
+            if (!existingIds.Contains(tag.Id))
+                JobTags.Add(new JobTag(Id, tag.Id, tag));
+        }
+
         Touch();
     }
 
