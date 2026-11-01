@@ -8,16 +8,50 @@ using ClipGen.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddProblemDetails();
+
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(
         new System.Text.Json.Serialization.JsonStringEnumConverter()));
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ClipGen.Be — Jobs/Clips/Tags",
+        Version = "v1",
+        Description = """
+            Проверка через Swagger:
+            1. POST /api/auth/register — создать пользователя.
+            2. POST /api/auth/login — скопировать "token" из ответа.
+            3. Кнопка Authorize (замок справа сверху) — вставить токен (без префикса "Bearer").
+            4. Дальше все запросы уходят с этим токеном автоматически.
+            /api/admin/jobs-summary доступен только пользователю с ролью Admin.
+            """,
+    });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT, полученный через POST /api/auth/login.",
+    });
+
+    options.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
+    {
+        { new OpenApiSecuritySchemeReference("Bearer", doc), [] },
+    });
+});
+
 builder.Services.AddClipGenInfrastructure(builder.Configuration);
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
@@ -58,9 +92,12 @@ builder.Services.AddScoped<ClipOwnershipFilter>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseExceptionHandler();
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -69,6 +106,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/health", () => Results.Ok()).AllowAnonymous();
 
 await SeedIdentityAsync(app);
 
