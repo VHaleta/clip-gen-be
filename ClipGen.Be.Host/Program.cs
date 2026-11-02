@@ -1,7 +1,9 @@
 using System.Security.Claims;
 using System.Text;
 using ClipGen.Be.Host.Auth;
+using ClipGen.Be.Host.Errors;
 using ClipGen.Be.Host.Filters;
+using ClipGen.Be.Host.Services;
 using ClipGen.Core.Domain;
 using ClipGen.Infrastructure;
 using ClipGen.Infrastructure.Data;
@@ -15,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ServiceExceptionHandler>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(
@@ -88,6 +91,12 @@ builder.Services.AddAuthorizationBuilder()
 
 builder.Services.AddScoped<JobOwnershipFilter>();
 builder.Services.AddScoped<ClipOwnershipFilter>();
+
+builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<JobService>();
+builder.Services.AddScoped<ClipService>();
+builder.Services.AddScoped<TagService>();
+builder.Services.AddScoped<AdminReportService>();
 
 var app = builder.Build();
 

@@ -1,13 +1,12 @@
 using System.Security.Claims;
-using ClipGen.Infrastructure.Data;
+using ClipGen.Core.Abstractions.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClipGen.Be.Host.Filters;
 
 /// <summary>404, если {id} из маршрута — не Job текущего пользователя (чужие данные не раскрываются).</summary>
-public sealed class JobOwnershipFilter(AppDbContext db) : IAsyncActionFilter
+public sealed class JobOwnershipFilter(IJobRepository jobs) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
@@ -24,8 +23,7 @@ public sealed class JobOwnershipFilter(AppDbContext db) : IAsyncActionFilter
             return;
         }
 
-        var exists = await db.Jobs.AnyAsync(j => j.Id == jobId && j.UserId == userId);
-        if (!exists)
+        if (!await jobs.ExistsForUserAsync(jobId, userId, context.HttpContext.RequestAborted))
         {
             context.Result = new NotFoundResult();
             return;

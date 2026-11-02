@@ -1,7 +1,6 @@
-using System.Data;
+using ClipGen.Core.Abstractions.Persistence;
 using ClipGen.Infrastructure.Data;
-using ClipGen.Infrastructure.Reports;
-using Microsoft.Data.SqlClient;
+using ClipGen.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,10 +18,10 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure()));
 
-        // Отдельное соединение для Dapper (read-путь отчётов) — на той же строке подключения,
-        // без привязки к change tracking EF Core.
-        services.AddScoped<IDbConnection>(_ => new SqlConnection(connectionString));
-        services.AddScoped<JobReportsQueries>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IJobRepository, JobRepository>();
+        services.AddScoped<IClipRepository, ClipRepository>();
+        services.AddScoped<ITagRepository, TagRepository>();
 
         return services;
     }

@@ -14,7 +14,7 @@
 | 7 | Admin-отчёт — `AdminController` + политика `AdminOnly` + Dapper-путь | Готово |
 | 8 | Swagger — security scheme, описание, финальная сборка `Program.cs` и пайплайна middleware | Готово |
 | 9 | Интеграционные тесты — фабрика/фикстура + 6 тестовых классов | Готово |
-| 10 | Техническая заметка `docs/data-access-notes.md` — trade-off'ы EF Core/Dapper + реальные результаты тестов | Не начато |
+| 10 | Техническая заметка `docs/data-access-notes.md` — trade-off'ы EF Core/Dapper + реальные результаты тестов | Готово |
 | 11 | Финальная проверка — `dotnet build`, `dotnet ef database update`, ручной проход через Swagger, `dotnet test`, обновление статусов здесь | Не начато |
 
 Обновляется по ходу работы: статус меняется на «В работе» при старте этапа и на «Готово» по завершении.

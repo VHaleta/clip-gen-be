@@ -1,14 +1,16 @@
-namespace ClipGen.Infrastructure.Reports;
+using ClipGen.Core.Domain;
+
+namespace ClipGen.Core.Abstractions.Persistence;
 
 /// <summary>
 /// Строка admin-отчёта: только метаданные задачи (без текста нарратива и путей к файлам),
-/// по всем пользователям — для /api/admin/jobs-summary.
+/// по всем пользователям (product-spec 3.6).
 /// </summary>
-public sealed record JobSummaryRow(
+public sealed record JobSummary(
     Guid JobId,
     string UserName,
     string OriginalFileName,
-    int Status,
+    JobStatus Status,
     DateTimeOffset CreatedAt,
     int ClipCount,
-    string? Tags);
+    IReadOnlyList<string> Tags);

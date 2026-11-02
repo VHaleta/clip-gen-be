@@ -1,13 +1,12 @@
 using System.Security.Claims;
-using ClipGen.Infrastructure.Data;
+using ClipGen.Core.Abstractions.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
 
 namespace ClipGen.Be.Host.Filters;
 
 /// <summary>404, если {id} из маршрута — не Clip задачи текущего пользователя.</summary>
-public sealed class ClipOwnershipFilter(AppDbContext db) : IAsyncActionFilter
+public sealed class ClipOwnershipFilter(IClipRepository clips) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
@@ -24,8 +23,7 @@ public sealed class ClipOwnershipFilter(AppDbContext db) : IAsyncActionFilter
             return;
         }
 
-        var exists = await db.Clips.AnyAsync(c => c.Id == clipId && c.Job.UserId == userId);
-        if (!exists)
+        if (!await clips.ExistsForUserAsync(clipId, userId, context.HttpContext.RequestAborted))
         {
             context.Result = new NotFoundResult();
             return;

@@ -31,7 +31,7 @@ public sealed class AdminReportTests(DatabaseFixture fixture)
     }
 
     [Fact]
-    public async Task Admin_SeesJobAcrossUsers_ViaDapperReport()
+    public async Task Admin_SeesJobAcrossUsers_ViaReport()
     {
         var ownerClient = fixture.Factory.CreateClient();
         var (ownerUserName, ownerToken) = await AuthTestHelper.RegisterAndLoginAsync(ownerClient);
