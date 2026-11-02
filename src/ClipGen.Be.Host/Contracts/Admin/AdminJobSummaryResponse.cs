@@ -1,6 +1,6 @@
 namespace ClipGen.Be.Host.Contracts.Admin;
 
-/// <summary>Метаданные задачи для админ-отчёта — без текста нарратива и путей к файлам (product-spec 3.6).</summary>
+/// <summary>Job metadata for the admin report, without narrative text or file paths (product-spec 3.6).</summary>
 public sealed record AdminJobSummaryResponse(
     Guid JobId,
     string UserName,

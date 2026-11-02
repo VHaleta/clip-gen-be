@@ -4,7 +4,7 @@ namespace ClipGen.Core.Abstractions.Persistence;
 
 public interface IClipRepository
 {
-    /// <summary>Клип задачи пользователя вместе с задачей (нужна длительность исходника).</summary>
+    /// <summary>A clip of the user's job, loaded together with the job (the source duration is needed).</summary>
     Task<Clip?> FindWithJobForUserAsync(Guid id, Guid userId, CancellationToken ct = default);
 
     Task<Clip?> FindForUserAsync(Guid id, Guid userId, CancellationToken ct = default);

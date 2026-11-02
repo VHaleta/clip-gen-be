@@ -11,7 +11,7 @@ public class JobTagConfiguration : IEntityTypeConfiguration<JobTag>
         builder.ToTable("JobTags");
         builder.HasKey(jt => new { jt.JobId, jt.TagId });
 
-        // Job -> JobTag (каскад) настроена в JobConfiguration; здесь — только сторона Tag (NoAction).
+        // Job -> JobTag (cascade) is configured in JobConfiguration; only the Tag side (NoAction) is here.
         builder.HasOne(jt => jt.Tag)
             .WithMany()
             .HasForeignKey(jt => jt.TagId)

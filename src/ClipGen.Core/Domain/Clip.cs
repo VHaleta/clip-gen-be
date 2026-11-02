@@ -69,9 +69,9 @@ public class Clip
     private static void ValidateRange(TimeRange range, TimeSpan sourceDuration)
     {
         if (range.Duration < MinDuration || range.Duration > MaxDuration)
-            throw new ArgumentOutOfRangeException(nameof(range), "Длина клипа должна быть от 1 до 180 секунд.");
+            throw new ArgumentOutOfRangeException(nameof(range), "Clip length must be between 1 and 180 seconds.");
         if (range.Start < TimeSpan.Zero || range.End > sourceDuration)
-            throw new ArgumentOutOfRangeException(nameof(range), "Диапазон выходит за пределы исходника.");
+            throw new ArgumentOutOfRangeException(nameof(range), "The range is outside the source bounds.");
     }
 
     private void Touch() => UpdatedAt = DateTimeOffset.UtcNow;

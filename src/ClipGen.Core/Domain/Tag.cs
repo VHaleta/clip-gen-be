@@ -13,7 +13,7 @@ public class Tag
     public static Tag Create(Guid userId, string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Имя тега обязательно.", nameof(name));
+            throw new ArgumentException("Tag name is required.", nameof(name));
 
         return new Tag { Id = Guid.NewGuid(), UserId = userId, Name = name.Trim() };
     }

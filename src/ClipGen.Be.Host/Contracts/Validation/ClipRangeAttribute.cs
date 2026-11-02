@@ -8,12 +8,12 @@ public interface IClipRange
     double EndSec { get; }
 }
 
-/// <summary>Длина клипа — 1-180 секунд, конец после начала (tech-spec раздел 14).</summary>
+/// <summary>Clip length is 1-180 seconds and the end is after the start (tech-spec section 14).</summary>
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class ClipRangeAttribute : ValidationAttribute
 {
     public ClipRangeAttribute()
-        : base("Клип: конец диапазона должен быть больше начала, длительность — от 1 до 180 секунд.")
+        : base("Clip: the range end must be greater than the start and the duration must be 1 to 180 seconds.")
     {
     }
 

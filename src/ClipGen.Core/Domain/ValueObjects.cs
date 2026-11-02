@@ -10,7 +10,7 @@ public readonly record struct TimeRange(TimeSpan Start, TimeSpan End)
 public sealed record CropSettings
 {
     public CropMode Mode { get; init; } = CropMode.BlurredBackground;
-    public double Offset { get; init; } = 0.5; // 0..1, только для ManualOffset
+    public double Offset { get; init; } = 0.5; // 0..1, ManualOffset only
 }
 
 public sealed record ProcessingOptions

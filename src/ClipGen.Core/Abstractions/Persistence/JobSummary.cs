@@ -3,8 +3,8 @@ using ClipGen.Core.Domain;
 namespace ClipGen.Core.Abstractions.Persistence;
 
 /// <summary>
-/// Строка admin-отчёта: только метаданные задачи (без текста нарратива и путей к файлам),
-/// по всем пользователям (product-spec 3.6).
+/// Admin report row: job metadata only (no narrative text or file paths),
+/// across all users (product-spec 3.6).
 /// </summary>
 public sealed record JobSummary(
     Guid JobId,

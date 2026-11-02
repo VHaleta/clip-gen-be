@@ -3,13 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace ClipGen.Be.Host.Contracts.Validation;
 
-/// <summary>Логин: латиница, цифры, '.', '_', '-', 3-32 символа; зарезервированные имена запрещены.</summary>
+/// <summary>Login: Latin letters, digits, '.', '_', '-', 3-32 characters; reserved names are not allowed.</summary>
 public sealed partial class UserLoginAttribute : ValidationAttribute
 {
     private static readonly string[] ReservedNames = ["admin", "root", "system"];
 
     public UserLoginAttribute()
-        : base("Логин должен содержать 3-32 символа: латиница, цифры, '.', '_', '-'.")
+        : base("Login must be 3-32 characters: Latin letters, digits, '.', '_', '-'.")
     {
     }
 

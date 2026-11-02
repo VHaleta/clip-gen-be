@@ -14,7 +14,7 @@ public sealed class TokenService(IOptions<JwtOptions> options)
     public (string Token, DateTimeOffset ExpiresAt) CreateToken(AppUser user, IReadOnlyList<string> roles)
     {
         if (string.IsNullOrWhiteSpace(_options.SigningKey))
-            throw new InvalidOperationException("Jwt:SigningKey не задан в конфигурации.");
+            throw new InvalidOperationException("Jwt:SigningKey is not configured.");
 
         var now = DateTimeOffset.UtcNow;
         var expiresAt = now.AddMinutes(_options.ExpiryMinutes);

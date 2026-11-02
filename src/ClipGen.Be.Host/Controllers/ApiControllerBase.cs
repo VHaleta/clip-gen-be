@@ -10,5 +10,5 @@ public abstract class ApiControllerBase : ControllerBase
 {
     protected Guid CurrentUserId =>
         Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)
-            ?? throw new InvalidOperationException("В токене отсутствует идентификатор пользователя."));
+            ?? throw new InvalidOperationException("The token does not contain a user identifier."));
 }

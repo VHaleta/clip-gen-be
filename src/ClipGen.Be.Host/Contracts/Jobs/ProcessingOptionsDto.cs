@@ -33,7 +33,7 @@ public sealed class ProcessingOptionsDto : IValidatableObject
         if (Crop.Mode == CropMode.ManualOffset && Crop.Offset is < 0 or > 1)
         {
             yield return new ValidationResult(
-                "Crop.Offset должен быть в диапазоне 0..1 при режиме ManualOffset.",
+                "Crop.Offset must be within 0..1 in ManualOffset mode.",
                 [$"{nameof(Crop)}.{nameof(Crop.Offset)}"]);
         }
     }

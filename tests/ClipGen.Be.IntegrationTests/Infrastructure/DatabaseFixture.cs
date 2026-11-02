@@ -9,9 +9,9 @@ public sealed class DatabaseFixture : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        // Отдельный, не связанный с хостом DbContext: миграция должна создать базу ДО того,
-        // как WebApplicationFactory запустит приложение (а запуск приложения, включая сид ролей
-        // в Program.cs, стартует уже при первом обращении к Factory.Services/CreateClient()).
+        // A separate DbContext unrelated to the host: the migration must create the database BEFORE
+        // WebApplicationFactory starts the app (and app startup, including role seeding
+        // in Program.cs, already happens on the first access to Factory.Services/CreateClient()).
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseSqlServer(CustomWebApplicationFactory.ResolveConnectionString(), sql => sql.EnableRetryOnFailure())
             .Options;

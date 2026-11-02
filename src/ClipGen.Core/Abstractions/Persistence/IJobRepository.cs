@@ -4,18 +4,18 @@ namespace ClipGen.Core.Abstractions.Persistence;
 
 public interface IJobRepository
 {
-    /// <summary>Задача пользователя без навигаций.</summary>
+    /// <summary>The user's job without navigations.</summary>
     Task<Job?> FindForUserAsync(Guid id, Guid userId, CancellationToken ct = default);
 
-    /// <summary>Задача пользователя только с клипами.</summary>
+    /// <summary>The user's job with clips only.</summary>
     Task<Job?> FindWithClipsForUserAsync(Guid id, Guid userId, CancellationToken ct = default);
 
-    /// <summary>Задача пользователя с клипами и тегами.</summary>
+    /// <summary>The user's job with clips and tags.</summary>
     Task<Job?> FindWithDetailsForUserAsync(Guid id, Guid userId, CancellationToken ct = default);
 
     Task<IReadOnlyList<JobListEntry>> ListForUserAsync(Guid userId, CancellationToken ct = default);
 
-    /// <summary>Сводка по задачам всех пользователей — только для админ-отчёта.</summary>
+    /// <summary>Summary of jobs across all users, for the admin report only.</summary>
     Task<IReadOnlyList<JobSummary>> ListSummariesForAllUsersAsync(CancellationToken ct = default);
 
     Task<bool> ExistsForUserAsync(Guid id, Guid userId, CancellationToken ct = default);

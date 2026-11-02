@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.Testing;
 namespace ClipGen.Be.IntegrationTests.Infrastructure;
 
 /// <summary>
-/// Своя БД (не та, что у разработчика в Development) и свой dev-ключ JWT — тесты самодостаточны
-/// и не зависят от персональных User Secrets. CLIPGEN_TEST_CONNECTION позволяет указать другую
-/// строку подключения (например, Azure SQL после перехода с LocalDB) без изменения кода тестов.
+/// A dedicated DB (not the developer's Development one) and a dedicated dev JWT key keep the tests self-contained
+/// and independent of personal User Secrets. CLIPGEN_TEST_CONNECTION lets you specify a different
+/// connection string (e.g. Azure SQL after moving off LocalDB) without changing the test code.
 /// </summary>
 public sealed class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {

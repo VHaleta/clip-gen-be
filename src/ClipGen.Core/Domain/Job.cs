@@ -26,11 +26,11 @@ public class Job
         Guid userId, string originalFileName, string sourceFileHash, TimeSpan sourceDuration, ProcessingOptions options)
     {
         if (string.IsNullOrWhiteSpace(originalFileName))
-            throw new ArgumentException("Имя файла обязательно.", nameof(originalFileName));
+            throw new ArgumentException("File name is required.", nameof(originalFileName));
         if (string.IsNullOrWhiteSpace(sourceFileHash))
-            throw new ArgumentException("Хэш исходника обязателен.", nameof(sourceFileHash));
+            throw new ArgumentException("Source file hash is required.", nameof(sourceFileHash));
         if (sourceDuration <= TimeSpan.Zero)
-            throw new ArgumentOutOfRangeException(nameof(sourceDuration), "Длительность исходника должна быть положительной.");
+            throw new ArgumentOutOfRangeException(nameof(sourceDuration), "Source duration must be positive.");
 
         var now = DateTimeOffset.UtcNow;
         return new Job
@@ -62,7 +62,7 @@ public class Job
             _ => false,
         };
         if (!allowed)
-            throw new InvalidOperationException($"Недопустимый переход {Status} -> {next}.");
+            throw new InvalidOperationException($"Invalid transition {Status} -> {next}.");
 
         Status = next;
         Touch();
@@ -78,9 +78,9 @@ public class Job
 
     public void ReplaceTags(IEnumerable<Tag> tags)
     {
-        // Мутация существующей коллекции (Add/RemoveAll), а не присвоение нового списка:
-        // EF Core отследит именно разницу, без конфликта отслеживания по дублирующемуся
-        // составному ключу между старым и новым JobTag с одинаковыми JobId/TagId.
+        // Mutate the existing collection (Add/RemoveAll) rather than assigning a new list:
+        // EF Core then tracks just the difference, with no tracking conflict on a duplicate
+        // composite key between the old and new JobTag with the same JobId/TagId.
         var desiredIds = tags.Select(t => t.Id).ToHashSet();
 
         JobTags.RemoveAll(jt => !desiredIds.Contains(jt.TagId));

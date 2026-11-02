@@ -27,8 +27,8 @@ internal sealed class JobRepository(AppDbContext db) : IJobRepository
             .Select(j => new JobListEntry(j.Id, j.OriginalFileName, j.Status, j.Clips.Count, j.CreatedAt))
             .ToListAsync(ct);
 
-    // ClipCount — скалярный подзапрос, теги — отдельная коллекция в проекции: EF не соединяет
-    // Clips и Tags в одном JOIN, поэтому нет декартова произведения и задвоения количества клипов.
+    // ClipCount is a scalar subquery and tags are a separate collection in the projection: EF does not join
+    // Clips and Tags in a single JOIN, so there is no Cartesian product and no double-counting of clips.
     public async Task<IReadOnlyList<JobSummary>> ListSummariesForAllUsersAsync(CancellationToken ct = default) =>
         await db.Jobs
             .AsNoTracking()
@@ -48,7 +48,7 @@ internal sealed class JobRepository(AppDbContext db) : IJobRepository
 
     public void Add(Job job) => db.Jobs.Add(job);
 
-    // Clips и JobTags удаляются каскадно на уровне БД (JobConfiguration) — одной атомарной
-    // операцией SaveChangesAsync, без ручного удаления дочерних строк.
+    // Clips and JobTags are cascade-deleted at the DB level (JobConfiguration) in a single atomic
+    // SaveChangesAsync call, without deleting child rows manually.
     public void Remove(Job job) => db.Jobs.Remove(job);
 }

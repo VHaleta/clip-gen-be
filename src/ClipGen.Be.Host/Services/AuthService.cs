@@ -8,7 +8,7 @@ namespace ClipGen.Be.Host.Services;
 
 public sealed record RegisteredUser(Guid Id, string UserName);
 
-/// <summary>Пользователи хранятся через ASP.NET Identity — <see cref="UserManager{TUser}"/> играет роль репозитория.</summary>
+/// <summary>Users are stored via ASP.NET Identity; <see cref="UserManager{TUser}"/> acts as the repository.</summary>
 public sealed class AuthService(UserManager<AppUser> userManager, TokenService tokenService)
 {
     public async Task<RegisteredUser> RegisterAsync(RegisterRequest request)
@@ -27,7 +27,7 @@ public sealed class AuthService(UserManager<AppUser> userManager, TokenService t
     {
         var user = await userManager.FindByNameAsync(request.UserName);
         if (user is null || !await userManager.CheckPasswordAsync(user, request.Password))
-            throw new UnauthorizedException("Неверный логин или пароль.");
+            throw new UnauthorizedException("Invalid login or password.");
 
         var roles = await userManager.GetRolesAsync(user);
         var (token, expiresAt) = tokenService.CreateToken(user, roles.ToList());

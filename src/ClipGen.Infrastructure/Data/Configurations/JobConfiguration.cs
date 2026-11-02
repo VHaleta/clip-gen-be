@@ -10,17 +10,17 @@ public class JobConfiguration : IEntityTypeConfiguration<Job>
     {
         builder.ToTable("Jobs");
         builder.HasKey(j => j.Id);
-        // Id генерируется в Job.Create (Guid.NewGuid()), а не в БД — без этого EF Core может
-        // спутать новую сущность, достигнутую через fixup навигации, с уже существующей строкой.
+        // Id is generated in Job.Create (Guid.NewGuid()), not by the DB; otherwise EF Core may
+        // mistake a new entity reached via navigation fixup for an already existing row.
         builder.Property(j => j.Id).ValueGeneratedNever();
 
         builder.Property(j => j.OriginalFileName).HasMaxLength(260).IsRequired();
         builder.Property(j => j.SourceFileHash).HasMaxLength(64).IsRequired();
 
-        // ProcessingOptions (включая вложенный CropSettings) хранится целиком как JSON-колонка.
+        // ProcessingOptions (including the nested CropSettings) is stored as a single JSON column.
         builder.ComplexProperty(j => j.Options, options => options.ToJson());
 
-        // Единственная каскадная ветка: AppUser -> Job -> (Clip, JobTag). Остальное — NoAction (раздел 4.4 tech-spec).
+        // The only cascade branch: AppUser -> Job -> (Clip, JobTag). Everything else is NoAction (tech-spec section 4.4).
         builder.HasOne(j => j.User)
             .WithMany()
             .HasForeignKey(j => j.UserId)
@@ -36,7 +36,7 @@ public class JobConfiguration : IEntityTypeConfiguration<Job>
             .HasForeignKey(jt => jt.JobId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Tags — производное свойство над JobTags, в БД не хранится отдельно.
+        // Tags is a derived property over JobTags and is not stored separately in the DB.
         builder.Ignore(j => j.Tags);
 
         builder.HasIndex(j => j.UserId);

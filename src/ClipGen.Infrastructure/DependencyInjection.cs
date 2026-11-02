@@ -13,7 +13,7 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Default");
         if (string.IsNullOrWhiteSpace(connectionString))
-            throw new InvalidOperationException("Строка подключения 'ConnectionStrings:Default' не задана.");
+            throw new InvalidOperationException("Connection string 'ConnectionStrings:Default' is not configured.");
 
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString, sql => sql.EnableRetryOnFailure()));

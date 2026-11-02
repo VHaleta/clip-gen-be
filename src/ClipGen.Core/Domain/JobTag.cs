@@ -1,6 +1,6 @@
 namespace ClipGen.Core.Domain;
 
-/// <summary>Явная join-сущность Job&lt;-&gt;Tag (не неявная skip navigation EF Core).</summary>
+/// <summary>Explicit Job&lt;-&gt;Tag join entity (not an implicit EF Core skip navigation).</summary>
 public class JobTag
 {
     public Guid JobId { get; private set; }

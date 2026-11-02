@@ -10,14 +10,14 @@ public class ClipConfiguration : IEntityTypeConfiguration<Clip>
     {
         builder.ToTable("Clips");
         builder.HasKey(c => c.Id);
-        // Id генерируется в Clip.Create (Guid.NewGuid()) — не в БД (см. JobConfiguration).
+        // Id is generated in Clip.Create (Guid.NewGuid()), not by the DB (see JobConfiguration).
         builder.Property(c => c.Id).ValueGeneratedNever();
 
         builder.Property(c => c.Reason).HasMaxLength(500).IsRequired();
         builder.Property(c => c.Hook).HasMaxLength(200);
         builder.Property(c => c.NarrativeText).HasMaxLength(4000);
 
-        // TimeRange — complex type, не JSON: два обычных столбца.
+        // TimeRange is a complex type, not JSON: two regular columns.
         builder.ComplexProperty(c => c.Range, range =>
         {
             range.Property(r => r.Start).HasColumnName("RangeStart").IsRequired();
@@ -26,6 +26,6 @@ public class ClipConfiguration : IEntityTypeConfiguration<Clip>
 
         builder.HasIndex(c => new { c.JobId, c.Index }).IsUnique();
 
-        // Связь Job -> Clip (включая каскад) настроена в JobConfiguration.
+        // The Job -> Clip relationship (including cascade) is configured in JobConfiguration.
     }
 }

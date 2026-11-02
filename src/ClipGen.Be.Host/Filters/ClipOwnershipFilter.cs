@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ClipGen.Be.Host.Filters;
 
-/// <summary>404, если {id} из маршрута — не Clip задачи текущего пользователя.</summary>
+/// <summary>404 if the route {id} is not a Clip of the current user's job.</summary>
 public sealed class ClipOwnershipFilter(IClipRepository clips) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

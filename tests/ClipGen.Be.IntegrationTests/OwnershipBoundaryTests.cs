@@ -26,11 +26,11 @@ public sealed class OwnershipBoundaryTests(DatabaseFixture fixture)
             (await strangerClient.PutAsJsonAsync($"/api/jobs/{job.Id}/options", new ProcessingOptionsDto(), TestJson.Options)).StatusCode);
         Assert.Equal(HttpStatusCode.NotFound, (await strangerClient.DeleteAsync($"/api/jobs/{job.Id}")).StatusCode);
 
-        // Чужой список задач не содержит job другого пользователя.
+        // Another user's job list does not contain this user's job.
         var strangerJobs = await (await strangerClient.GetAsync("/api/jobs")).Content.ReadFromJsonAsync<List<JobListItem>>(TestJson.Options);
         Assert.DoesNotContain(strangerJobs!, j => j.Id == job.Id);
 
-        // Владелец видит задачу как ни в чём не бывало — попытка чужого не повлияла.
+        // The owner still sees the job unchanged: the other user's attempt had no effect.
         Assert.Equal(HttpStatusCode.OK, (await ownerClient.GetAsync($"/api/jobs/{job.Id}")).StatusCode);
     }
 }

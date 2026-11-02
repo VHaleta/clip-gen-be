@@ -4,8 +4,8 @@ using ClipGen.Core.Abstractions.Persistence;
 namespace ClipGen.Be.Host.Services;
 
 /// <summary>
-/// Кросс-пользовательский отчёт — только метаданные, без транскриптов, текстов нарратива
-/// или файлов других пользователей (product-spec 3.6).
+/// Cross-user report: metadata only, without transcripts, narrative texts
+/// or other users' files (product-spec 3.6).
 /// </summary>
 public sealed class AdminReportService(IJobRepository jobs)
 {

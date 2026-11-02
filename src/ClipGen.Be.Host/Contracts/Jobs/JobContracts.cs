@@ -7,7 +7,7 @@ namespace ClipGen.Be.Host.Contracts.Jobs;
 
 public sealed record CreateJobRequest(
     [Required, StringLength(260, MinimumLength = 1)] string OriginalFileName,
-    [Required, RegularExpression("^[a-fA-F0-9]{64}$", ErrorMessage = "SourceFileHash должен быть SHA-256 (64 hex-символа).")]
+    [Required, RegularExpression("^[a-fA-F0-9]{64}$", ErrorMessage = "SourceFileHash must be a SHA-256 hash (64 hex characters).")]
     string SourceFileHash,
     [Range(0.1, 36000)] double SourceDurationSeconds,
     ProcessingOptionsDto? Options);

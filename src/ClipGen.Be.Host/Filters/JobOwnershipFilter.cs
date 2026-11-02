@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace ClipGen.Be.Host.Filters;
 
-/// <summary>404, если {id} из маршрута — не Job текущего пользователя (чужие данные не раскрываются).</summary>
+/// <summary>404 if the route {id} is not a Job of the current user (other users' data is not disclosed).</summary>
 public sealed class JobOwnershipFilter(IJobRepository jobs) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

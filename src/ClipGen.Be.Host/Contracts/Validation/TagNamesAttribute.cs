@@ -3,11 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace ClipGen.Be.Host.Contracts.Validation;
 
-/// <summary>Имя тега: буквы, цифры, пробел, дефис, до 64 символов (tech-spec раздел 16).</summary>
+/// <summary>Tag name: letters, digits, space, hyphen, up to 64 characters (tech-spec section 16).</summary>
 public sealed partial class TagNamesAttribute : ValidationAttribute
 {
     public TagNamesAttribute()
-        : base("Тег должен содержать буквы, цифры, пробел или дефис, не более 64 символов.")
+        : base("A tag may contain only letters, digits, spaces or hyphens, up to 64 characters.")
     {
     }
 

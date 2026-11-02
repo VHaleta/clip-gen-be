@@ -62,7 +62,7 @@ public sealed class ClipAndCascadeTests(DatabaseFixture fixture)
 
         Assert.Equal(HttpStatusCode.NotFound, (await client.GetAsync($"/api/jobs/{job.Id}")).StatusCode);
 
-        // Клип физически удалён каскадом вместе с задачей — обновление больше не находит его.
+        // The clip was physically cascade-deleted with the job, so the update no longer finds it.
         var updateClipResponse = await client.PutAsJsonAsync(
             $"/api/clips/{clip!.Id}",
             new UpdateClipRequest(1, 2, true, null),

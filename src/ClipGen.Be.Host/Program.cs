@@ -30,12 +30,12 @@ builder.Services.AddSwaggerGen(options =>
         Title = "ClipGen.Be — Jobs/Clips/Tags",
         Version = "v1",
         Description = """
-            Проверка через Swagger:
-            1. POST /api/auth/register — создать пользователя.
-            2. POST /api/auth/login — скопировать "token" из ответа.
-            3. Кнопка Authorize (замок справа сверху) — вставить токен (без префикса "Bearer").
-            4. Дальше все запросы уходят с этим токеном автоматически.
-            /api/admin/jobs-summary доступен только пользователю с ролью Admin.
+            Testing via Swagger:
+            1. POST /api/auth/register — create a user.
+            2. POST /api/auth/login — copy "token" from the response.
+            3. Authorize button (lock icon, top right) — paste the token (without the "Bearer" prefix).
+            4. All subsequent requests are sent with this token automatically.
+            /api/admin/jobs-summary is available only to users with the Admin role.
             """,
     });
 
@@ -46,7 +46,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "JWT, полученный через POST /api/auth/login.",
+        Description = "JWT obtained via POST /api/auth/login.",
     });
 
     options.AddSecurityRequirement(doc => new OpenApiSecurityRequirement
