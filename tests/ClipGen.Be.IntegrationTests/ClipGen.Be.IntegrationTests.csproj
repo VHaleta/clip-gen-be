@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ClipGen.Be.Host\ClipGen.Be.Host.csproj" />
+    <ProjectReference Include="..\..\src\ClipGen.Be.Host\ClipGen.Be.Host.csproj" />
   </ItemGroup>
 
 </Project>

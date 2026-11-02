@@ -166,7 +166,7 @@ integration-тестов в середине, совсем немного e2e н
 
 ### Что сделано
 
-**Аутентификация — ASP.NET Core Identity + JWT.** `ClipGen.Be.Host/Program.cs`:
+**Аутентификация — ASP.NET Core Identity + JWT.** `src/ClipGen.Be.Host/Program.cs`:
 `AddIdentityCore<AppUser>().AddRoles<IdentityRole<Guid>>().AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders()`. Пароли хранятся только как хэш (Identity `PasswordHasher`, PBKDF2),
 сырой пароль нигде не логируется и не сохраняется — виден только внутри `UserManager.CreateAsync`/

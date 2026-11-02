@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ClipGen.Core\ClipGen.Core.csproj" />
-    <ProjectReference Include="..\src\ClipGen.Infrastructure\ClipGen.Infrastructure.csproj" />
+    <ProjectReference Include="..\ClipGen.Core\ClipGen.Core.csproj" />
+    <ProjectReference Include="..\ClipGen.Infrastructure\ClipGen.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
