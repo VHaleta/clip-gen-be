@@ -70,7 +70,10 @@ public class Job
 
     public Clip AddClip(TimeRange range, ClipSource source, int score, string reason, string? hook)
     {
-        var clip = Clip.Create(Id, Clips.Count, range, SourceDuration, source, score, reason, hook);
+        // Max + 1 rather than Count: indexes are not renumbered on delete, so Count can collide
+        // with an existing index and violate the unique (JobId, Index) constraint.
+        var nextIndex = Clips.Count == 0 ? 0 : Clips.Max(c => c.Index) + 1;
+        var clip = Clip.Create(Id, nextIndex, range, SourceDuration, source, score, reason, hook);
         Clips.Add(clip);
         Touch();
         return clip;

@@ -44,6 +44,42 @@ public sealed class ClipAndCascadeTests(DatabaseFixture fixture)
     }
 
     [Fact]
+    public async Task AddClip_AfterDeletingEarlierClip_GetsUniqueIndex()
+    {
+        var client = fixture.Factory.CreateClient();
+        var (_, token) = await AuthTestHelper.RegisterAndLoginAsync(client);
+        client.WithToken(token);
+
+        var job = await JobTestHelper.CreateJobAsync(client);
+
+        var indexes = new List<int>();
+        var ids = new List<Guid>();
+        for (var i = 0; i < 3; i++)
+        {
+            var response = await client.PostAsJsonAsync(
+                $"/api/jobs/{job.Id}/clips",
+                new AddClipRequest(i * 10, i * 10 + 5, ClipSource.Manual, 50, "pick", null),
+                TestJson.Options);
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            var clip = await response.Content.ReadFromJsonAsync<ClipResponse>(TestJson.Options);
+            ids.Add(clip!.Id);
+            indexes.Add(clip.Index);
+        }
+        Assert.Equal([0, 1, 2], indexes);
+
+        Assert.Equal(HttpStatusCode.NoContent, (await client.DeleteAsync($"/api/clips/{ids[0]}")).StatusCode);
+
+        // Count is now 2, which would collide with the existing index 2.
+        var addAfterDelete = await client.PostAsJsonAsync(
+            $"/api/jobs/{job.Id}/clips",
+            new AddClipRequest(40, 45, ClipSource.Manual, 50, "pick", null),
+            TestJson.Options);
+        Assert.Equal(HttpStatusCode.Created, addAfterDelete.StatusCode);
+        var added = await addAfterDelete.Content.ReadFromJsonAsync<ClipResponse>(TestJson.Options);
+        Assert.Equal(3, added!.Index);
+    }
+
+    [Fact]
     public async Task DeletingJob_CascadesItsClips()
     {
         var client = fixture.Factory.CreateClient();
